@@ -11,6 +11,5 @@ logs/
 # databases/
 index.js.overload
 .vscode/launch.json
-package-lock.json
 database/database.json
 databases/
