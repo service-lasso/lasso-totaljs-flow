@@ -1,6 +1,6 @@
 # lasso-totaljs-flow
 
-Service Lasso package repo for the TypeRefinery Total.js Flow donor app.
+Service Lasso package repo for the Total.js Flow app.
 
 The release pipeline packages the app with production `npm` dependencies already installed, publishes OS-specific archives, and publishes the matching `service.json` manifest.
 

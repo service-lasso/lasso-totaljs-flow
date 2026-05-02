@@ -5,10 +5,30 @@
   "description": "Total.js Flow server packaged for Service Lasso.",
   "version": "10.0.0",
   "enabled": true,
-  "status": "30",
-  "icon": "pi pi-globe",
-  "servicelocation": 10,
+  "execservice": "@node",
+  "ports": {
+    "service": 8111
+  },
+  "env": {
+    "NODE_ENV": "production",
+    "FLOW_PORT": "${SERVICE_PORT}",
+    "FLOW_HOST_URL": "http://127.0.0.1:${SERVICE_PORT}",
+    "MESSAGESERVICE_PORT": "${MESSAGESERVICE_PORT}",
+    "MESSAGESERVICE_URL": "${MESSAGESERVICE_URL}"
+  },
+  "globalenv": {
+    "FLOW_HOST_URL": "${FLOW_HOST_URL}",
+    "FLOW_PORT": "${FLOW_PORT}"
+  },
+  "urls": [
+    {
+      "label": "Total.js Flow",
+      "url": "${FLOW_HOST_URL}/",
+      "kind": "local"
+    }
+  ],
   "artifact": {
+    "kind": "archive",
     "source": {
       "type": "github-release",
       "repo": "service-lasso/lasso-totaljs-flow",
@@ -16,62 +36,43 @@
     },
     "platforms": {
       "win32": {
-        "asset": "lasso-totaljs-flow-10.0.0-win32.zip",
-        "archive": "zip",
+        "assetName": "lasso-totaljs-flow-10.0.0-win32.zip",
+        "archiveType": "zip",
         "command": "./lasso-totaljs-flow.mjs"
       },
       "linux": {
-        "asset": "lasso-totaljs-flow-10.0.0-linux.tar.gz",
-        "archive": "tar.gz",
+        "assetName": "lasso-totaljs-flow-10.0.0-linux.tar.gz",
+        "archiveType": "tar.gz",
         "command": "./lasso-totaljs-flow.mjs"
       },
       "darwin": {
-        "asset": "lasso-totaljs-flow-10.0.0-darwin.tar.gz",
-        "archive": "tar.gz",
+        "assetName": "lasso-totaljs-flow-10.0.0-darwin.tar.gz",
+        "archiveType": "tar.gz",
         "command": "./lasso-totaljs-flow.mjs"
       }
     }
   },
-  "execconfig": {
-    "debuglog": true,
-    "execservice": {
-      "id": "@node"
-    },
-    "datapath": "./database",
-    "commandline": {
-      "win32": "${SERVICE_ARTIFACT_ROOT}/lasso-totaljs-flow.mjs",
-      "linux": "${SERVICE_ARTIFACT_ROOT}/lasso-totaljs-flow.mjs",
-      "darwin": "${SERVICE_ARTIFACT_ROOT}/lasso-totaljs-flow.mjs",
-      "default": "${SERVICE_ARTIFACT_ROOT}/lasso-totaljs-flow.mjs"
-    },
-    "env": {
-      "NODE_ENV": "production",
-      "FLOW_PORT": "${SERVICE_PORT}",
-      "FLOW_HOST_URL": "http://127.0.0.1:${SERVICE_PORT}"
-    },
-    "globalenv": {
-      "FLOW_HOST_URL": "http://127.0.0.1:${SERVICE_PORT}",
-      "FLOW_PORT": "${SERVICE_PORT}"
-    },
-    "serviceport": 8111,
-    "healthcheck": {
-      "type": "http",
-      "url": "http://127.0.0.1:${SERVICE_PORT}/",
-      "expected_status": 200,
-      "retries": 180,
-      "interval_ms": 500
-    },
-    "depend_on": [
-      "@node",
-      "totaljs-messageservice"
-    ]
+  "commandline": {
+    "win32": "${SERVICE_ARTIFACT_ROOT}/lasso-totaljs-flow.mjs",
+    "linux": "${SERVICE_ARTIFACT_ROOT}/lasso-totaljs-flow.mjs",
+    "darwin": "${SERVICE_ARTIFACT_ROOT}/lasso-totaljs-flow.mjs",
+    "default": "${SERVICE_ARTIFACT_ROOT}/lasso-totaljs-flow.mjs"
   },
+  "healthcheck": {
+    "type": "http",
+    "url": "http://127.0.0.1:${SERVICE_PORT}/",
+    "expected_status": 200,
+    "retries": 180,
+    "interval": 500
+  },
+  "depend_on": [
+    "@node",
+    "totaljs-messageservice"
+  ],
   "updates": {
-    "policy": "notify",
-    "source": {
-      "type": "github-release",
-      "repo": "service-lasso/lasso-totaljs-flow",
-      "channel": "latest"
-    }
+    "enabled": true,
+    "mode": "notify",
+    "track": "latest",
+    "checkIntervalSeconds": 86400
   }
 }

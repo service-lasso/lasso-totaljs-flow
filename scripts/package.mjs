@@ -84,8 +84,7 @@ export async function packageFlow(platform = targetPlatform, version = serviceVe
       {
         serviceId: "totaljs-flow",
         upstream: {
-          source: "TypeRefinery donor service",
-          donorPath: "services/totaljs-flow",
+          source: "Total.js Flow",
           version,
         },
         packagedBy: "service-lasso/lasso-totaljs-flow",
